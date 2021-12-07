@@ -1,4 +1,7 @@
-with open("advent-3.txt", "r") as f:
+# https://adventofcode.com/2021/day/5
+# https://adventofcode.com/2021/day/5/input
+
+with open("input-data/advent-5.txt", "r") as f:
     data = f.readlines()
 
 formatted_data = []
