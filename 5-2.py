@@ -49,6 +49,16 @@ for data in checked:
         formatted_data.remove(data)
 
 
+part_one = 0
+
+for line in grid:
+    for i in line:
+        if i >= 2:
+            part_one += 1
+
+print(part_one)
+
+
 for sect in formatted_data:
     range_one = list(range(sect[0], sect[2] + 1, 1))
     range_two = list(range(sect[1], sect[3] + 1, 1))
