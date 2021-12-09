@@ -9,3 +9,4 @@ node_modules/
 .venv/
 .vscode
 *.code-workspace
+scrap.py
