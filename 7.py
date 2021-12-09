@@ -2,8 +2,8 @@
 # add test data to input-data/advent-test.txt
 # replace test with current day when happy with script
 
-# https://adventofcode.com/2021/day/???
-# https://adventofcode.com/2021/day/???/input
+# https://adventofcode.com/2021/day/7
+# https://adventofcode.com/2021/day/7/input
 
 with open("input-data/advent-7.txt", "r") as f:
     data = f.readlines()
