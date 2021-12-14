@@ -5,9 +5,7 @@
 # https://adventofcode.com/2021/day/4
 # https://adventofcode.com/2021/day/4/input
 
-from collections import Counter
-
-with open("input-data/advent-test.txt", "r") as f:
+with open("input-data/advent-4.txt", "r") as f:
     data = f.readlines()
 
 
@@ -34,7 +32,9 @@ boards.append(board)
 for board in boards:
     new_board = []
     for line in board:
-        new_board.append(line.split())
+        line = line.split()
+        line = [int(i) for i in line]
+        new_board.append(line)
     formatted_boards.append(new_board)
 
 
@@ -96,128 +96,71 @@ class Board():
         ]
         self.done = False
 
-
-win_boards = {}
-for counter, board in enumerate(formatted_boards):
-    win_boards.update({counter: Board(board)})
 win_board_list = []
-for i in range(len(win_boards)):
-    win_board_list.append(win_boards[i])
+for board in formatted_boards:
+    win_board_list.append(Board(board))
 
 calls = []
-found = False
 
-# i = 0
+def check_first_win():
 
-# hits = []
-used_boards =[]
-# trur = False
-
-for i in range(len(numbers)):
-    calls.append(numbers[i])
-    for board in win_board_list:
-        if not board.done:
-            for line in board.winning_rows:
-                if str(numbers[i]) in line:
-                    line.remove(str(numbers[i]))
-                    if len(line) == 0:
-                        board.done = True
-                        used_boards.append(board)
+    for i in range(len(numbers)):
+        calls.append(numbers[i])
+        for board in win_board_list:
+            if not board.done:
+                for line in board.winning_rows:
+                    if numbers[i] in line:
+                        line.remove(numbers[i])
+                        if len(line) == 0:
+                            board.done = True
+                            return board
 
 
+def check_last_win(first_board):
 
-# print("_________________________________________")
+    finished_boards = []
+    finished_boards.append(first_board)
 
-# print(win_board_list)
+    print(len(win_board_list))
 
-# print(used_boards[-1])
-# print(win_board_list[-9].winning_rows)
-# flob =(
-#     win_board_list[-9].winning_rows[0]+
-#     win_board_list[-9].winning_rows[1]+
-#     win_board_list[-9].winning_rows[2]+
-#     win_board_list[-9].winning_rows[3]+
-#     win_board_list[-9].winning_rows[4]+
-#     win_board_list[-9].winning_rows[5]+
-#     win_board_list[-9].winning_rows[6]+
-#     win_board_list[-9].winning_rows[7]+
-#     win_board_list[-9].winning_rows[8]+
-#     win_board_list[-9].winning_rows[9]
-# )
-# print(set(flob))
-
-# stud = {61, 43, 58, 41, 27, 80}
-
-# print(sum(stud))
-
-# print(hits)
-# print(calls)
-
-# # while not found and i < len(numbers):
-# #     calls.append(str(numbers[i]))
-# #     for board in win_board_list:
-# #         for line in board.winning_rows:
-# #             if all(elem in calls for elem in line):
-# #                 print(line)
-# #                 print(board)
-# #                 found = True
-# #     i += 1
-
-# # print(win_board_list[16].winning_rows)
-
-# # called = ['92', '12', '94', '64', '14', '4', '99', '71', '47', '59', '37', '73', '29', '7', '16', '32', '40', '53', '30', '76', '74', '39']
-
-# new_calls = [92, 12, 94, 64, 14, 4, 99, 71, 47, 59, 37, 73, 29, 7, 16, 32, 40, 53, 30, 76, 74, 39, 70, 88, 55, 45, 17, 0, 24, 65, 35, 20, 63, 68, 89, 84, 33, 66, 18, 50, 38, 10, 83, 75, 67, 42, 3, 56, 82, 34, 90, 46, 87, 52, 49, 2, 21, 62, 93, 86, 25, 78, 19, 57, 77, 26, 81, 15, 23, 31, 54, 48, 98, 11, 91, 85, 60, 72, 8, 69, 6, 22, 97]
+    for i in range(len(numbers)):
+        print(len(finished_boards))
+        if len(finished_boards) < len(win_board_list):
+            calls.append(numbers[i])
+            for board in win_board_list:
+                if not board.done:
+                    for line in board.winning_rows:
+                        if numbers[i] in line:
+                            line.remove(numbers[i])
+                            if len(line) == 0:
+                                board.done = True
+                                finished_boards.append(board)
+    return finished_boards
 
 
-# winner = [21, 50, 88, 14, 97]
 
-# board = [
-#     21, 48, 58,  4, 31,
-#     50,  6, 98, 43, 41,
-#     88, 80, 24, 35, 40,
-#     14, 45, 61, 10, 81,
-#     97, 27, 46,  8, 20
-# ]
+first_win = check_first_win()
+last_call = calls[-1]
 
-# for i in board:
-#     if i in new_calls:
-#         board.remove(i)
+total = 0
+for i in first_win.board_data:
+    for j in i:
+        total += j
 
+print(total * last_call)
 
-# print(board)
-# print(sum(board))
+# part two
 
-# # for i in win_board_list[16].row_a:
-# #     if i in called:
-# #         win_board_list[16].row_a.remove(i)
+calls = []
+win_list = check_last_win(first_win)
+very_last_call = calls[-1]
 
-# # for i in win_board_list[16].row_b:
-# #     if i in called:
-# #         win_board_list[16].row_b.remove(i)
+print(len(win_list))
+print(len(numbers))
 
-# # for i in win_board_list[16].row_c:
-# #     if i in called:
-# #         win_board_list[16].row_c.remove(i)
+losing_total = 0
+for i in win_list[-1].board_data:
+    for j in i:
+        losing_total += j
 
-# # for i in win_board_list[16].row_d:
-# #     if i in called:
-# #         win_board_list[16].row_d.remove(i)
-
-# # for i in win_board_list[16].row_e:
-# #     if i in called:
-# #         win_board_list[16].row_e.remove(i)
-
-
-# # final_sum = win_board_list[16].row_a + win_board_list[16].row_b +  win_board_list[16].row_c + win_board_list[16].row_d + win_board_list[16].row_e
-
-# # final_calc = [int(i) for i in final_sum]
-# # print(sum(final_calc))
-
-# # print(win_board_list[16].row_a)
-# # print(win_board_list[16].row_b)
-# # print(win_board_list[16].row_c)
-# # print(win_board_list[16].row_d)
-# # print(win_board_list[16].row_e)
-
-# # print(946*39)
+print(very_last_call * losing_total)
