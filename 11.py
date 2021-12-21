@@ -112,7 +112,11 @@ def check_flashes(current_grid):
 
 grid = create_grid(formatted_data)
 
+
+steps = 0
+
 for _ in range(100):
+    steps += 1
     grid = add_one(grid)
     grid = check_flashes(grid)
 
@@ -121,3 +125,19 @@ pprint(grid)
 print("-" * 60)
 
 print(f"flashes = {str(flashes)}")
+
+all_octos = [1]
+while any(all_octos):
+    steps += 1
+    all_octos = []
+    grid = add_one(grid)
+    grid = check_flashes(grid)
+    for row in grid:
+        for octo in row:
+            all_octos.append(octo)
+
+print("Last Grid ", "-" * 50)
+pprint(grid)
+print("-" * 60)
+
+print(f"steps = {str(steps)}")
